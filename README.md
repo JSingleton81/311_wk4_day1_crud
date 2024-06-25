@@ -49,20 +49,48 @@ Let's delete the appropriate information from `usersContact`, `usersAddress` and
 
 ## SQL Statements
 
-1. INSERT two users:
+1. INSERT two users: 
+INSERT INTO users
+	(first_name, last_name)
+VALUES 
+  ("test","user"),
+  ("test2","user");
 
 
 2. UPDATE all Ohio addresses to "REDACTED":
+UPDATE usersAddress
+SET state = "REDACTED"
+WHERE state = "OH";
+SELECT * FROM usersAddress;
+
 
 3. All three DELETES
 
 * DELETE from usersContact
+ALTER TABLE `admin`.`usersContact` 
+DROP FOREIGN KEY `usersContact_ibfk_1`;
+ALTER TABLE `admin`.`usersContact` 
+ADD CONSTRAINT `usersContact_ibfk_1`
+  FOREIGN KEY (`user_id`)
+  REFERENCES `admin`.`users` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
 
 
 * DELETE from usersAddress
+ALTER TABLE `admin`.`usersAddress` 
+DROP FOREIGN KEY `usersAddress_ibfk_1`;
+ALTER TABLE `admin`.`usersAddress` 
+ADD CONSTRAINT `usersAddress_ibfk_1`
+  FOREIGN KEY (`user_id`)
+  REFERENCES `admin`.`users` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
 
 
 * DELETE from users
+
+DELETE FROM `admin`.`users` WHERE (`id` = '114');
 
 
 ## Summary
